@@ -1,0 +1,31 @@
+{
+  "name": "papyr",
+  "version": "0.0.0",
+  "description": "A single-page web app for visualising API references.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/killdream/papyr.git"
+  },
+  "keywords": [
+    "api",
+    "documentation",
+    "docs",
+    "reference"
+  ],
+  "author": "Quildreen \"Sorella\" Motta <quildreen@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nib": "~0.9.1",
+    "stylus": "~0.32.0",
+    "browserify": "~1.17.3",
+    "ekho": "~0.3.0",
+    "boo": "~1.2.3",
+    "iris": "~0.2.3",
+    "express": "~3.1.0",
+    "clotho": "~0.1.2"
+  }
+}
