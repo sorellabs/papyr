@@ -1,7 +1,7 @@
-Papyr
-=====
+Papyr°
+======
 
-Papyr is a single-page web application for visualising API documentation
+Papyr° is a single-page web application for visualising API documentation
 written as plain JSON. It can also mix-in examples and Markdown-written
 content (with just-in-time client-side rendering too!)
 
