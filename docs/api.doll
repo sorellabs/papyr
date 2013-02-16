@@ -1,0 +1,44 @@
+-- Papyr: An tool for visualising API references
+
+--- Types
+
+type EntityKind = Data
+                | Module
+                | Function
+                | Object
+                | Interface
+
+type URI = String
+
+type Signature = String
+
+type Author = { name: String
+              , email: String
+              , website: String }
+
+type Entity = { id: URI 
+              , name: String
+              , kind: EntityKind
+              , signatures: [Signature]
+              , text: String
+              , code: String
+              , representation: String
+              , parent: URI -- ^ The parent ID
+
+              -- Source linking
+              , language: String
+              , line: Number
+              , file: String
+              , repository: String
+              , author: [Author]
+              , licence: String }
+
+
+
+
+-- | Function set-car!
+-- | Sets the head of a list.
+-- | 
+-- | set-car! :: a -> [a]*:b -> b
+(define-curried set-car! [x xs]
+  (...))
