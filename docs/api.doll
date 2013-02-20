@@ -28,9 +28,11 @@ type Entity = { id: URI
               -- Source linking
               , language: String
               , line: Number
+              , end-line: Number
               , file: String
+              , copyright: String
               , repository: String
-              , author: [Author]
+              , authors: [Author]
               , licence: String }
 
 

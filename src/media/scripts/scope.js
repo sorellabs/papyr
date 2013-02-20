@@ -119,7 +119,6 @@
   doSearch = function(){
     var value;
     value = new RegExp(searchQuery.value.replace(/\s*/g, '').replace(/(\W)/g, '\\s*\\$1\\s*'), 'i');
-    console.log(value);
     return each(function(x){
       var entity, visible;
       entity = bindings[x.getAttribute('data-id')];

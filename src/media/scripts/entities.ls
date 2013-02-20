@@ -49,8 +49,58 @@ make-html = (x) ->
 
 render-signature = (x) -> ($ '.signature' x)
 
+make-repository-link = (repository, file, line, end-line) ->
+  filename = if line => "#{file}:#{line}-#{end-line}"
+             else    => file
+  switch
+  | /github.com/.test repository => ($ 'a.link'
+                                     , { href: "#{repository}/blob/master/#{file}\#L#{line or 1}-#{end-line or 1}" }
+                                     , filename )
+
+  | otherwise                    => filename
+
+
+render-author = (author) ->
+  | author.website => ($ 'li.author'
+                       , ($ 'a.link' { href: author.website }
+                          , author.name))
+
+  | author.email   => ($ 'li.author'
+                       , ($ 'a.link' { href: "mailto:#{author.email}" }
+                          , author.name))
+
+  | author.name    => ($ 'li.author' author.name)
+
 ### == Core implementation =============================================
-Code = boo.Base.derive {}
+Code = boo.Base.derive {
+  init: (x) ->
+    @language   = x.language
+    @line       = x.line
+    @end-line   = x['end-line'] or x.line
+    @file       = x.file
+    @repository = x.repository
+    @authors    = x.authors
+    @licence    = x.licence
+    @code       = x.code
+    @copyright  = x.copyright
+
+  render: -> ($ '.source-code'
+              , ($ 'h3.section-title' 'Source')
+              , if @repository => ($ '.repository-meta'
+                                   , ($ 'strong' 'Repository: ')
+                                   , ($ 'a.link' { href: @repository } @repository))
+              , if @file => ($ '.file-meta'
+                             , ($ 'strong' 'File: ')
+                             , make-repository-link @repository, @file, @line, @end-line)
+              , if @code => ($ 'pre.prettify'
+                             , ($ 'code' @code))
+              , if @authors => ($ '.licence-meta'
+                                , if @copyright => ($ '.copyright' @copyright)
+                                , ($ 'ul.authors' λ.map render-author, @authors)
+                                , if @licence => ($ '.licence' 'Licensed under ' @licence)))
+
+
+}
 
 Entity = boo.Base.derive {
   kind: 'entity'
@@ -81,9 +131,9 @@ Entity = boo.Base.derive {
   render-as-item: -> []
 
 
-  render: -> ($ ".item.kind-#{@kind}"
+  render: -> ($ ".item.kind-#{@kind}.child-no-#{@children.length}"
               , @render-as-item!
-              , ($ '.children' render-all @children))
+              , ($ ".children" render-all @children))
 
 
   page: -> ($ ".page.kind-#{@kind}"
@@ -133,6 +183,7 @@ Type = Entity.derive {
             , ($ 'h2.title' @full-name!)
             , ($ '.signatures' (λ.map render-signature, @signatures))
             , ($ '.description' clone @text)
+            , if @code => @code.render!
             , if @children.length
                 ($ '.children'
                  , ($ 'h3.section-title' 'See also')

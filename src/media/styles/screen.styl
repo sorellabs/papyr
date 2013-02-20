@@ -189,6 +189,9 @@ body
       margin-left: 20px
       border-left: 5px dotted #ececea
 
+    .child-no-0 .group-title
+      display: none
+
     .group-title
       font-family: "Open Sans"
       font-weight: 300
@@ -314,6 +317,39 @@ body
       margin-bottom: 1em
       border-bottom: 1px solid #ddd
       color: #888
+      &:empty
+        display: none
+    .source-code .section-title
+      margin-bottom: 0.5em
+    .licence-meta
+      text-align: right
+      font-size: 0.9em
+      color: #999
+      margin-top: 10px
+      margin-right: 20px
+      .authors
+        list-style: none
+        margin: 0
+        display: inline
+      .author
+        display: inline
+        &:not(:first-child):before
+          content: ", "
+        &:last-child:after
+          content: ". "
+      .licence, .copyright
+        display: inline
+        &:after
+          content: ". "
+    .repository-meta, .file-meta
+      strong
+        font-weight: 300
+        text-transform: uppercase
+        display: inline-block
+        color: #999
+        line-height: 1.5em
+        font-size: 1.2em
+        margin-right: 0.5em
     .back-button
       content: ""
       display: block

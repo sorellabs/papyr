@@ -2353,6 +2353,11 @@ body {
 }
 
 /* line 190 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#screen .item .child-no-0 .group-title {
+  display: none;
+}
+
+/* line 193 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .item .group-title {
   font-family: "Open Sans";
   font-weight: 300;
@@ -2362,18 +2367,18 @@ body {
   text-transform: uppercase;
 }
 
-/* line 198 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 201 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .item .section-title {
   font-size: 2em;
 }
 
-/* line 201 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 204 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .item .representation {
   font-family: monospace;
   margin-top: 5px;
 }
 
-/* line 204 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 207 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .item .representation .name,
 #screen .item .representation .signature,
 #screen .item .representation .default-signature,
@@ -2381,14 +2386,14 @@ body {
   display: inline-block;
 }
 
-/* line 206 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 209 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .item .representation .name {
   font-weight: bold;
   font-size: 1.2em;
   color: #555;
 }
 
-/* line 210 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 213 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .item .representation .signature-count {
   margin-left: 20px;
   background: #00bfff;
@@ -2400,33 +2405,33 @@ body {
   font-size: 0.8em;
 }
 
-/* line 218 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 221 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .item .representation .signature {
   color: #69a;
 }
 
-/* line 220 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 223 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .item .representation .signature:before {
   content: " :: ";
   display: inline-block;
   padding: 0 0.5em;
 }
 
-/* line 227 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 230 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .item .description {
   color: #777;
   margin-top: 0.5em;
 }
 
-/* line 231 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 234 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 
-/* line 232 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 235 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .kind-group .children {
   margin: 0;
   border: none;
 }
 
-/* line 236 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 239 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .type-description:before {
   content: "T";
   color: #ddd;
@@ -2442,32 +2447,32 @@ body {
   line-height: 50px;
 }
 
-/* line 250 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 253 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .kind-function > .type-description:before {
   content: "λ";
 }
 
-/* line 253 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 256 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .kind-object > .type-description:before {
   content: "{}";
 }
 
-/* line 256 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 259 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .kind-module > .type-description:before {
   content: "M";
 }
 
-/* line 259 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 262 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .kind-data > .type-description:before {
   content: "<>";
 }
 
-/* line 262 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 265 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .kind-class > .type-description:before {
   content: "C";
 }
 
-/* line 265 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 268 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .jsk-actionable-item .representation:after {
   content: "›";
   position: absolute;
@@ -2479,31 +2484,31 @@ body {
   text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
 }
 
-/* line 275 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 278 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .jsk-actionable-item {
   cursor: pointer;
 }
 
-/* line 277 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 280 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .jsk-actionable-item:hover {
   border-color: #00bfff;
 }
 
-/* line 279 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 282 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #screen .jsk-actionable-item:hover:before,
 #screen .jsk-actionable-item:hover .representation .name,
 #screen .jsk-actionable-item:hover .representation:after {
   color: #00bfff;
 }
 
-/* line 283 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 286 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #viewport {
   white-space: nowrap;
   list-style: none;
   overflow: hidden;
 }
 
-/* line 287 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 290 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #viewport > .context {
   display: inline-block;
   white-space: normal;
@@ -2515,7 +2520,7 @@ body {
   vertical-align: top;
 }
 
-/* line 293 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 296 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #viewport > .context.active {
   width: 940px;
   opacity: 1;
@@ -2523,7 +2528,7 @@ body {
   filter: none;
 }
 
-/* line 296 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 299 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #viewport > .context:not(.active) {
   width: 0;
   opacity: 0;
@@ -2533,19 +2538,19 @@ body {
   height: 400px;
 }
 
-/* line 302 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 305 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #viewport .entity-details.active {
   padding-left: 50px;
   width: 890px;
   min-height: 500px;
 }
 
-/* line 306 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 309 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #viewport .entity-details.active .title {
   margin-top: 0;
 }
 
-/* line 308 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 311 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #viewport .entity-details.active .signatures {
   font-family: monospace;
   background: #fff;
@@ -2555,7 +2560,74 @@ body {
   color: #888;
 }
 
-/* line 315 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 318 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .signatures:empty {
+  display: none;
+}
+
+/* line 320 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .source-code .section-title {
+  margin-bottom: 0.5em;
+}
+
+/* line 322 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .licence-meta {
+  text-align: right;
+  font-size: 0.9em;
+  color: #999;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+/* line 328 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .licence-meta .authors {
+  list-style: none;
+  margin: 0;
+  display: inline;
+}
+
+/* line 332 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .licence-meta .author {
+  display: inline;
+}
+
+/* line 334 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .licence-meta .author:not(:first-child):before {
+  content: ", ";
+}
+
+/* line 336 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .licence-meta .author:last-child:after {
+  content: ". ";
+}
+
+/* line 338 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .licence-meta .licence,
+#viewport .entity-details.active .licence-meta .copyright {
+  display: inline;
+}
+
+/* line 340 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .licence-meta .licence:after,
+#viewport .entity-details.active .licence-meta .copyright:after {
+  content: ". ";
+}
+
+/* line 342 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+
+/* line 343 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+#viewport .entity-details.active .repository-meta strong,
+#viewport .entity-details.active .file-meta strong {
+  font-weight: 300;
+  text-transform: uppercase;
+  display: inline-block;
+  color: #999;
+  line-height: 1.5em;
+  font-size: 1.2em;
+  margin-right: 0.5em;
+}
+
+/* line 351 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #viewport .entity-details.active .back-button {
   content: "";
   display: block;
@@ -2575,7 +2647,7 @@ body {
   transition: all 0.3s ease-out;
 }
 
-/* line 328 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
+/* line 364 : /home/queen/Projects/Applications/papyr/src/media/styles/screen.styl */
 #viewport .entity-details.active .back-button:hover {
   background-color: #00bfff;
 }
