@@ -47,7 +47,7 @@ render-all = λ.map (.render void)
 make-html = (x) ->
   set-html x, $ '.html-container'
 
-render-signature = ->
+render-signature = (x) -> ($ '.signature' x)
 
 ### == Core implementation =============================================
 Code = boo.Base.derive {}
@@ -59,12 +59,13 @@ Entity = boo.Base.derive {
     @id        = x.id
     @name      = x.name
     @text      = make-html (marked x.text || '')
+    @markdown  = x.text || ''
     @parent-id = x.parent
 
     @parent    = null
     @children  = []
 
-  summary: -> @text
+  summary: -> clone @text
 
 
   assimilate: (x) ->
@@ -114,13 +115,12 @@ Type = Entity.derive {
 
   full-name: -> @name
 
-
   representation: -> [ ($ '.name' @name)
                      , if @signatures.length
                          ($ '.signature'
                           , ($ '.default-signature' @signatures.0)
                           , if @signatures.length > 1
-                              ($ '.signature-count' @signatures.length)) ]
+                              ($ '.signature-count' "+#{@signatures.length - 1}")) ]
 
 
   render-as-item: -> ($ '.type-description.jsk-actionable-item'

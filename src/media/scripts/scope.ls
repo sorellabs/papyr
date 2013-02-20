@@ -26,7 +26,7 @@
 ## Module scope ########################################################
 λ = require 'prelude-ls'
 entities = require './entities'
-{detach, listen, clear, query, append, add-class, remove-class} = (require 'moros')!
+{detach, listen, clear, query, append, add-class, remove-class, specify-class-state, each} = (require 'moros')!
 {builder:$} = require 'clotho/src/browser'
 
 bindings = {}
@@ -96,6 +96,11 @@ update-render = (xs) ->
   append entity-list, rendered xs
 
 
+do-transition = ->
+  window.scroll-to 0, 0
+  add-class 'in-transition', (query 'body')
+  set-timeout (-> remove-class 'in-transition', (query 'body')), 600
+
 # Events
 (query '#viewport') |> listen 'click' (ev) ->
   el = find-target '.jsk-actionable-item', ev.current-target, ev.target
@@ -109,7 +114,9 @@ update-render = (xs) ->
                                          , entity.page!)
       deactivate (query '.context')
       activate p
-      window.scroll-to 0, 0
+      add-class 'prettyprint', (query 'pre', p)
+      pretty-print void, p
+      do-transition!
 
 (query '#viewport') |> listen 'click' (ev) ->
   el = find-target '.context > .back-button', ev.current-target, ev.target
@@ -118,8 +125,34 @@ update-render = (xs) ->
     context = el.parent-element
     deactivate context
     activate context.previous-element-sibling
-    window.scroll-to 0, 0
     set-timeout (-> detach context), 500
+    do-transition!
+
+
+
+search-query = (query '#search-query').0
+search-timer = null
+
+search-query |> listen 'focus' (ev) -> activate search-query.parent-element
+
+search-query |> listen 'blur' (ev) -> deactivate search-query.parent-element
+
+search-query |> listen 'keyup' (ev) ->
+  clear-timeout search-timer
+  set-timeout do-search, 1000
+
+do-search = ->
+  value = new RegExp (search-query.value.replace /\s*/g, ''
+                                        .replace /(\W)/g, '\\s*\\$1\\s*')
+                   , 'i'
+  (query '#entity-list .jsk-actionable-item') |> each (x) ->
+    entity = bindings[x.get-attribute 'data-id']
+    if entity
+      visible = value.test entity.id or \
+                value.test entity.name or \
+                value.test entity.markdown or \
+                value.test ((entity.signatures or []).join '\n')
+      specify-class-state 'hidden' (not visible), x
 
 
 

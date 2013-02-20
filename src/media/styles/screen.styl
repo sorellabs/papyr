@@ -1,0 +1,333 @@
+/// screen.styl --- entry point for Papyr styles
+//
+// Copyright (c) 2013 Quildreen "Sorella" Motta <quildreen@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person
+// obtaining a copy of this software and associated documentation files
+// (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge,
+// publish, distribute, sublicense, and/or sell copies of the Software,
+// and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+/// -- Font definitions ------------------------------------------------
+@css {
+  @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
+}
+
+/// -- Configuration ---------------------------------------------------
+jsk-body-font        = 'Open Sans', sans
+jsk-heading-font     = 'Open Sans', sans
+jsk-base-line-height = 1.2em
+jsk-base-font-size   = 16px
+jsk-base-colour      = #424242
+
+
+/// -- Dependencies ----------------------------------------------------
+@import "nib"
+global-reset()  // So we dont affect JSK defs
+
+
+@import "entypo-stylus"
+@import "jumper-skirt/layout/grid"
+@import "jumper-skirt/layout/typography"
+@import "jumper-skirt/forms/core"
+
+
+/// -- Re-configuration ------------------------------------------------
+jsk-grid-width = 100%
+entypo-define('Entypo', '../fonts/entypo/entypo', 'entypo')
+
+
+/// -- Classes ---------------------------------------------------------
+.constrained
+  width: 940px
+  margin: 0 auto
+
+.icon
+  font-size: 2em
+  color: #ccc
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2)
+  position: absolute
+
+.icon-at-right
+  right: 10px
+
+
+
+/// -- Page layout -----------------------------------------------------
+body
+  background: #fafafa
+  transform: translateZ(0, 0, 0)
+  
+.in-transition
+  overflow: hidden
+
+#header
+  padding-top: 20px
+  background: linear-gradient(top, #eee, #fafafa)
+  position: fixed
+  width: 100%
+  z-index: 100
+  clearfix: yes
+
+  #logo
+    jsk-grid-make-column: 7
+    color: #aaa
+    text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.7)
+    font-size: 64px   
+
+  #search-panel
+    jsk-grid-make-column: 5
+    height: 64px
+    position: relative
+
+    .search-field
+      padding-right: 40px
+      margin-top: 24px
+
+    #search-query
+      font-size: 18px
+      margin: 0
+      height: 32px
+      line-height: 32px
+
+    .icon
+      bottom: 15px
+      font-size: 48px
+
+
+#footer
+  margin-top: 2em
+  background: #ddd
+  padding: 10px 0
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.25)
+  min-height: 50px
+  position: fixed
+  bottom: 0px
+  width: 100%
+  z-index: 100
+
+  #papyr-info
+    text-align: right
+
+    .application
+      font-size: 32px
+      color: #888
+      font-weight: 300
+      margin: 0 0 8px 0
+
+    .copy-info
+      color: #aaa
+
+
+/// -- Entities --------------------------------------------------------
+#screen
+  jsk-grid-make-column: 12
+  padding: 120px 0 150px
+
+#screen
+  pre
+    margin: 1em 0
+    padding: 10px
+    font-family: monospace
+    line-height: 1.3em
+    border-left: 10px solid #424242
+    border-radius: 0
+    background: #202020
+
+  code
+    font-family: monospace
+    color: #FA2573
+
+  a
+    color: #369
+    text-decoration: none
+    &:hover
+      color: #00bfff
+
+  .hidden
+    display: none
+
+  .section-title
+    color: #aaa
+    border-bottom: 1px solid #ddd
+    padding-bottom: 10px
+    margin-bottom: 0
+
+  .item
+    .type-description
+      border-bottom: 1px solid #ddd
+      padding: 5px 50px 5px 50px
+      position: relative
+      overflow-y: hidden
+      overflow-x: visible
+      max-height: 70px
+      min-height: 40px
+      &:after
+        content: ""
+        position: absolute
+        bottom: 0
+        left: 0
+        width: 100%
+        height: 20px
+        z-index: 2
+        background: linear-gradient(bottom, rgba(255,255,255,0.8), rgba(255,255,255,0))
+
+    .children
+      margin-left: 20px
+      border-left: 5px dotted #ececea
+
+    .group-title
+      font-family: "Open Sans"
+      font-weight: 300
+      font-size: 1.5em
+      color: #999
+      padding: 1.5em 0 0.5em 10px
+      text-transform: uppercase
+
+    .section-title
+      font-size: 2em
+
+    .representation
+      font-family: monospace
+      margin-top: 5px
+      .name, .signature, .default-signature, .signature-count
+        display: inline-block
+      .name
+        font-weight: bold
+        font-size: 1.2em
+        color: #555
+      .signature-count
+        margin-left: 20px
+        background: #00bfff
+        color: #fff
+        font-weight: bold
+        border-radius: 50%
+        padding: 2px 10px
+        font-size: 0.8em
+      .signature
+        color: #69a
+        &:before
+          content: " :: "
+          display: inline-block
+          padding: 0 0.5em
+
+      
+
+    .description
+      color: #777
+      margin-top: 0.5em
+    
+  .kind-group
+    .children
+      margin: 0
+      border: none
+
+  .type-description:before
+      content: "T"
+      color: #ddd
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3)
+      border-right: 1px solid #eaeaea
+      font-size: 32px
+      position: absolute
+      top: 0
+      left: 0
+      width: 40px
+      height: 100%
+      text-align: center
+      line-height: 50px
+
+  .kind-function > .type-description:before
+    content: "λ"
+
+  .kind-object > .type-description:before
+    content: "{}"
+
+  .kind-module > .type-description:before
+    content: "M"
+
+  .kind-data > .type-description:before
+    content: "<>"
+  
+  .kind-class > .type-description:before
+    content: "C"
+
+  .jsk-actionable-item .representation:after
+    content: "›"
+    position: absolute
+    top: 15px
+    right: 10px
+    font-size: 64px
+    color: #999
+    font-weight: bold
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4)
+
+  .jsk-actionable-item
+    cursor: pointer
+    &:hover
+      border-color: #00bfff
+    &:hover:before, &:hover .representation .name, &:hover .representation:after
+      color: #00bfff
+
+
+#viewport
+  white-space: nowrap
+  list-style: none
+  overflow: hidden
+  & > .context
+    display: inline-block
+    white-space: normal
+    transition: all 0.25s ease-out
+    vertical-align: top
+
+  & > .context.active
+    width: 940px
+    opacity: 1
+  & > .context:not(.active)
+    width: 0
+    opacity: 0
+    overflow: hidden
+    height: 400px
+
+  .entity-details.active
+    padding-left: 50px
+    width: 890px
+    min-height: 500px
+    .title
+      margin-top: 0
+    .signatures
+      font-family: monospace
+      background: #fff
+      padding: 20px
+      margin-bottom: 1em
+      border-bottom: 1px solid #ddd
+      color: #888
+    .back-button
+      content: ""
+      display: block
+      cursor: pointer
+      position: fixed
+      top: 50%
+      left: 50%
+      width: 50px
+      height: 500px
+      margin-top: -250px
+      margin-left: -500px
+      background: #424242 url('../images/back-arrow.png') no-repeat left center
+      transition: all 0.3s ease-out
+      &:hover
+        background-color: #00bfff
+
+      
