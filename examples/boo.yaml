@@ -44,7 +44,7 @@
   name: copy_property
   kind: function
   signatures: 
-    - Object, Object*, String -> Object
+    - Object, a:Object*, String -> a
   parent: boo/@helpers
   text: |
     `(internal)` Copies a property from `source` to `target`.
@@ -93,3 +93,317 @@
     function data_obj_p(subject) {
       return subject != null
       &&     typeof subject.to_data == 'function' }
+
+-
+  id: boo/resolve_mixins
+  name: resolve_mixins
+  kind: function
+  signatures:
+    - Mixin -> Object
+  parent: boo/@helpers
+  text: |
+    `(internal)` Returns the proper object for the given mixin.
+  language: JavaScript
+  repository: http://github.com/killdream/boo
+  copyright: © 2011
+  authors:
+    -
+      name: Quildreen "Sorella" Motta
+      email: quildreen@gmail.com
+      website: http://killdream.github.com/
+  licence: MIT
+  file: lib/boo.js
+  line: 81
+  end-line: 83
+  code: |
+    function resolve_mixin(subject) {
+      return data_obj_p(subject)?  subject.to_data()
+      :      /* otherwise */       subject }
+
+-
+  id: boo/fast_extend
+  name: fast_extend
+  kind: function
+  signatures:
+    - a:Object*, [Mixin] -> a
+  parent: boo/@helpers
+  text: |
+    Extends the target Object with the provided mixins.
+
+    This function uses a right-most precedence rule, such that when there's a
+    property conflict, the property defined in the last object wins.
+
+    `DataObject`s, when used as mixins, are properly handled through the
+    `resolve_mixin` function. This ensures `DataObject`s always yield a new
+    instance properly initialised.
+
+    **warning**: low-level
+    > This function is not meant to be called directly by from end-user
+    > code. Use the `extend` function instead.
+  language: JavaScript
+  repository: http://github.com/killdream/boo
+  copyright: © 2011
+  authors:
+    -
+      name: Quildreen "Sorella" Motta
+      email: quildreen@gmail.com
+      website: http://killdream.github.com/
+  licence: MIT
+  file: lib/boo.js
+  line: 100
+  end-line: 109
+  code: |
+    function fast_extend(object, mixins) {
+      var i, j, len, mixin, props, key
+      for (i = 0, len = mixins.length; i < len; ++i) {
+        mixin = resolve_mixin(mixins[i])
+        props = keys(mixin)
+        for (j = props.length; j--;) {
+          key         = props[j]
+          copy_property(mixin, object, key) }}
+  
+      return object }
+
+-
+  id: boo/@basic-primitives
+  name: Basic primitives
+  kind: group
+  parent: boo
+
+-
+  id: boo/extend
+  name: extend
+  kind: function
+  signatures:
+    - a:Object*, Mixin... -> a
+  parent: boo/@basic-primitives
+  text: |
+    Extends the target object with the provided mixins, using a right-most
+    precedence rule.
+
+    @@@ See also
+
+    - [fast_extend](#!/show/boo/fast_extend): A lower level function.
+    - [merge](#!/show/boo/merge): The pure version.
+  language: JavaScript
+  repository: http://github.com/killdream/boo
+  copyright: © 2011
+  authors:
+    -
+      name: Quildreen "Sorella" Motta
+      email: quildreen@gmail.com
+      website: http://killdream.github.com/
+  licence: MIT
+  file: lib/boo.js
+  line: 124
+  end-line: 125
+  code: |
+    function extend(target) {
+      return fast_extend(target, slice.call(arguments, 1)) }
+
+-
+  id: boo/merge
+  name: merge
+  kind: function
+  signatures:
+    - Mixin... -> Object
+  parent: boo/@basic-primitives
+  text: |
+    Creates a new object that merges the provided mixins, using a right-most
+    precedence rule.
+
+    @@@ See also
+
+    - [extend](#!/show/boo/extend): The impure version.
+  language: JavaScript
+  repository: http://github.com/killdream/boo
+  copyright: © 2011
+  authors:
+    -
+      name: Quildreen "Sorella" Motta
+      email: quildreen@gmail.com
+      website: http://killdream.github.com/
+  licence: MIT
+  file: lib/boo.js
+  line: 136
+  end-line: 137
+  code: |
+    function merge() {
+      return fast_extend({}, arguments) }
+
+-
+  id: boo/derive
+  name: derive
+  kind: function
+  signatures:
+    - a:Object, Mixin... -> a <| b
+  parent: boo/@basic-primitives
+  text: |
+    Creates a new object inheriting from the given prototype, and extends the
+    new instance with the provided `Mixin`s.
+  language: JavaScript
+  repository: http://github.com/killdream/boo
+  copyright: © 2011
+  authors:
+    -
+      name: Quildreen "Sorella" Motta
+      email: quildreen@gmail.com
+      website: http://killdream.github.com/
+  licence: MIT
+  file: lib/boo.js
+  line: 145
+  end-line: 146
+  code: |
+    function derive(proto) {
+      return fast_extend(inherit(proto), slice.call(arguments, 1)) }
+
+-
+  id: boo/make
+  name: make
+  kind: function
+  signatures:
+    - a:Object, b... -> a <| c
+  parent: boo/@basic-primitives
+  text: |
+    Constructs a new instance of the given object, performing initialisation.
+
+    If the object provides an `init` function, that function is invoked to
+    initialise the new instance. If you don't want this, consider using
+    [derive](#!/show/boo/derive) instead.
+  language: JavaScript
+  repository: http://github.com/killdream/boo
+  copyright: © 2011
+  authors:
+    -
+      name: Quildreen "Sorella" Motta
+      email: quildreen@gmail.com
+      website: http://killdream.github.com/
+  licence: MIT
+  file: lib/boo.js
+  line: 156
+  end-line: 157
+  code: |
+    function make(base) {
+      return Base.make.apply(base, slice.call(arguments, 1)) }
+
+-
+  id: boo/@root-object
+  name: Root object
+  kind: group
+  parent: boo
+
+-
+  id: boo/Base
+  name: Base
+  kind: object
+  signatures:
+    - Object <| Base
+  parent: boo/@root-object
+  text: |
+    Provides all of the previous primitive combinators in an easy OOP way.
+  language: JavaScript
+  repository: http://github.com/killdream/boo
+  copyright: © 2011
+  authors:
+    -
+      name: Quildreen "Sorella" Motta
+      email: quildreen@gmail.com
+      website: http://killdream.github.com/
+  licence: MIT
+  file: lib/boo.js
+  line: 166
+  end-line: 191
+  code: |
+    var Base = {
+  
+      ////// Function make
+      // Constructs new instances of the object the function is being
+      // applied to.
+      //
+      // If the object provides an ``init`` function, that function is
+      // invoked to do initialisation on the new instance.
+      //
+      // make :: @this:Object, Any... -> Object <| this
+      make:
+      function _make() {
+        var result = inherit(this)
+        if (typeof result.init == 'function')
+          result.init.apply(result, arguments)
+  
+        return result }
+  
+      ////// Function derive
+      // Constructs a new object that inherits from the object this function
+      // is being applied to, and extends it with the provided mixins.
+      //
+      // derive :: @this:Object, Mixin... -> Object <| this
+    , derive:
+      function _derive() {
+        return fast_extend(inherit(this), arguments) }}
+  
+-
+  id: boo/Base/make
+  name: make
+  kind: function
+  signatures:
+    - @this:Object, a... -> this <| b
+  parent: boo/Base
+  text: |
+    Constructs a new instance of the given object, performing initialisation.
+
+    If the object provides an `init` function, that function is invoked to
+    initialise the new instance. If you don't want this, consider using
+    [derive](#!/show/boo/Base/derive) instead.
+  language: JavaScript
+  repository: http://github.com/killdream/boo
+  copyright: © 2011
+  authors:
+    -
+      name: Quildreen "Sorella" Motta
+      email: quildreen@gmail.com
+      website: http://killdream.github.com/
+  licence: MIT
+  file: lib/boo.js
+  line: 176
+  end-line: 182
+  code: |
+    make:
+    function _make() {
+      var result = inherit(this)
+      if (typeof result.init == 'function')
+        result.init.apply(result, arguments)
+
+      return result }
+
+-
+  id: boo/Base/derive
+  name: derive
+  kind: function
+  signatures:
+    - @this:Object, Mixin... -> this <| b
+  parent: boo/Base
+  text: |
+    Creates a new object inheriting from the given prototype, and extends the
+    new instance with the provided `Mixin`s.
+  language: JavaScript
+  repository: http://github.com/killdream/boo
+  copyright: © 2011
+  authors:
+    -
+      name: Quildreen "Sorella" Motta
+      email: quildreen@gmail.com
+      website: http://killdream.github.com/
+  licence: MIT
+  file: lib/boo.js
+  line: 189
+  end-line: 191
+  code: |
+    , derive:
+      function _derive() {
+        return fast_extend(inherit(this), arguments) }}
+
+-
+  id: boo/@exports
+  name: Exports
+  kind: group
+  parent: boo
