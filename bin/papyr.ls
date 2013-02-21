@@ -157,7 +157,7 @@ load-api-entities = (api) ->
 build-documentation = (config) ->
   data      = read-as-json config
   data.apis = map load-api-entities, data.apis
-  template  = jade (read-template (data.template or 'default.jade'))
+  template  = jade.compile (read-template (data.template or 'default.jade'))
   entities  = concat-map (process-api (api-map data.apis)), data.apis
 
   # Initialise the output directory
