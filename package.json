@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": "./bin/papyr",
   "repository": {
     "type": "git",
     "url": "git://github.com/killdream/papyr.git"
