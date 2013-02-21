@@ -1,0 +1,160 @@
+#!/usr/bin/env node
+(function(){
+  var doc, fs, path, glob, jade, marked, wrench, write, read, readAsJson, readTemplate, copyTree, makeTree, toJson, jsonp, apiMap, inheritAll, inherit, loadExamples, processApi, loadApiEntities, buildDocumentation, printHelp, docopt, papyrMeta, args;
+  doc = 'Papyr° — CLI tool for generating Papyr° documentation.\n\nUsage:\n  papyr build <json>\n  papyr -h | --help\n  papyr --version\n\nOptions:\n  -h, --help              Shows this screen.\n  -v, --version           Displays Papyr° version and exits.';
+  fs = require('fs');
+  path = require('path');
+  glob = require('glob');
+  jade = require('jade');
+  marked = require('marked');
+  wrench = require('wrench');
+  import$(global, require('prelude-ls'));
+  write = curry$(function(pathname, contents){
+    return fs.writeFileSync(pathname, contents, 'utf-8');
+  });
+  read = function(pathname){
+    return fs.readFileSync(pathname, 'utf-8');
+  };
+  readAsJson = function(pathname){
+    return JSON.parse(read(pathname));
+  };
+  readTemplate = function(pathname){
+    return read(path.resolve(__dirname, '../templates', pathname));
+  };
+  copyTree = curry$(function(from, out){
+    return wrench.copyDirSyncRecursive(from, out);
+  });
+  makeTree = function(pathname){
+    return wrench.mkdirSyncRecursive(pathname);
+  };
+  toJson = JSON.stringify;
+  jsonp = function(x){
+    return "papyr.load(" + x + ")";
+  };
+  apiMap = function(api){
+    var i$, ref$, len$, x, results$ = {};
+    for (i$ = 0, len$ = (ref$ = api.entities).length; i$ < len$; ++i$) {
+      x = ref$[i$];
+      results$[x.id] = x;
+    }
+    return results$;
+  };
+  inheritAll = curry$(function(entity, apiMap, api, xs){
+    return each(function(x){
+      return each(inherit(entity, apiMap, api), x);
+    })(
+    xs);
+  });
+  inherit = curry$(function(entity, apiMap, api, property){
+    var parent, p;
+    parent = arguments[5];
+    if (!property in entity) {
+      if (arguments.length < 5) {
+        parent = entity.parent;
+      }
+      if (parent) {
+        p = apiMap[parent];
+        if (p) {
+          switch (false) {
+          case !(property in p):
+            return entity[property] = p[property];
+          case !otherewise:
+            return inherit(entity, apiMap, api, property, parent.parent);
+          }
+        }
+      } else {
+        if (property in api) {
+          return entity[property] = api[property];
+        }
+      }
+    }
+  });
+  loadExamples = curry$(function(pathname, entity){
+    var base, files;
+    base = path.resolve(pathname, entity.id);
+    files = glob.sync('*.md', {
+      cwd: base
+    });
+    return map(compose$([
+      marked, read, function(it){
+        return path.resolve(base, it);
+      }
+    ]), files);
+  });
+  processApi = curry$(function(apiMap, api){
+    return each(function(x){
+      if (api.prefix) {
+        x.id = api.prefix + x.id;
+      }
+      inheritAll(x, apiMap, api, ['language', 'file', 'copyright', 'repository', 'authors', 'licence']);
+      x.examples = loadExamples(api.examples, x);
+      return x;
+    })(
+    api.entities);
+  });
+  loadApiEntities = function(api){
+    api.entities = concatMap(readAsJson, api.entities);
+    return api;
+  };
+  buildDocumentation = function(config){
+    var data, template, entities, out;
+    data = readAsJson(config);
+    data.apis = map(loadApiEntities, data.apis);
+    template = jade.compile(readTemplate(data.template || 'default.jade'), {
+      self: true
+    });
+    entities = concatMap(function(api){
+      processApi(apiMap(api), api);
+      return api.entities;
+    })(
+    data.apis);
+    out = data.output || 'build-docs';
+    makeTree(out);
+    copyTree(path.resolve(__dirname, '../www/media'), out + "/media");
+    copyTree(path.resolve(__dirname, '../www/vendor'), out + "/vendor");
+    write(out + "/index.html", template(data));
+    write(out + "/api.jsonp", jsonp(toJson(entities)));
+    return console.log("Documentation successfully generated at " + out + ".");
+  };
+  printHelp = function(){
+    console.log(doc);
+    return process.exit(0);
+  };
+  docopt = require('docopt').docopt;
+  papyrMeta = require('../package');
+  args = docopt(doc, {
+    version: papyrMeta.version
+  });
+  switch (false) {
+  case !args.build:
+    buildDocumentation(args['<json>']);
+    break;
+  default:
+    printHelp();
+  }
+  function import$(obj, src){
+    var own = {}.hasOwnProperty;
+    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+    return obj;
+  }
+  function curry$(f, bound){
+    var context,
+    _curry = function(args) {
+      return f.length > 1 ? function(){
+        var params = args ? args.concat() : [];
+        context = bound ? context || this : this;
+        return params.push.apply(params, arguments) <
+            f.length && arguments.length ?
+          _curry.call(context, params) : f.apply(context, params);
+      } : f;
+    };
+    return _curry();
+  }
+  function compose$(fs){
+    return function(){
+      var i, args = arguments;
+      for (i = fs.length; i > 0; --i) { args = [fs[i-1].apply(this, args)]; }
+      return args[0];
+    };
+  }
+}).call(this);
