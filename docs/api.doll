@@ -36,6 +36,23 @@ type Entity = { id: URI
               , licence: String }
 
 
+type Config
+  project :: String
+  version :: String
+  template :: String
+  copyright :: String
+  output :: Pathname -- ^ Output directory
+  apis :: [API]
+
+type API
+  authors :: [Author]
+  copyright :: String
+  licence :: String
+  repository :: String
+  entities :: [Entity]
+  examples :: Pathname -- ^ Root for examples folder
+  prefix :: String -- ^ If given, a prefix for every ID in this API
+
 
 
 -- | Function set-car!
