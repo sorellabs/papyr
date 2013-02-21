@@ -110,6 +110,7 @@ Entity = boo.Base.derive {
     @name      = x.name
     @text      = make-html (marked x.text || '')
     @markdown  = x.text || ''
+    @examples  = λ.map (make-html . marked), (x.examples or [])
     @parent-id = x.parent
 
     @parent    = null
@@ -183,7 +184,10 @@ Type = Entity.derive {
             , ($ 'h2.title' @full-name!)
             , ($ '.signatures' (λ.map render-signature, @signatures))
             , ($ '.description' clone @text)
-            , if @code => @code.render!
+            , if @code.code => @code.render!
+            , if @examples.length => ($ '.examples-section'
+                                      , ($ 'h3.section-title' 'Examples')
+                                      , @examples)
             , if @children.length
                 ($ '.children'
                  , ($ 'h3.section-title' 'See also')

@@ -67,6 +67,7 @@
       this.name = x.name;
       this.text = makeHtml(marked(x.text || ''));
       this.markdown = x.text || '';
+      this.examples = λ.map(compose$([makeHtml, marked]), x.examples || []);
       this.parentId = x.parent;
       this.parent = null;
       return this.children = [];
@@ -127,7 +128,7 @@
       }, $('.representation', this.representation()), $('.description', this.summary()));
     },
     page: function(){
-      return $(".page.kind-" + this.kind, $('h2.title', this.fullName()), $('.signatures', λ.map(renderSignature, this.signatures)), $('.description', clone(this.text)), this.code ? this.code.render() : void 8, this.children.length ? $('.children', $('h3.section-title', 'See also'), renderAll(this.children)) : void 8);
+      return $(".page.kind-" + this.kind, $('h2.title', this.fullName()), $('.signatures', λ.map(renderSignature, this.signatures)), $('.description', clone(this.text)), this.code.code ? this.code.render() : void 8, this.examples.length ? $('.examples-section', $('h3.section-title', 'Examples'), this.examples) : void 8, this.children.length ? $('.children', $('h3.section-title', 'See also'), renderAll(this.children)) : void 8);
     }
   });
   Function = Type.derive({
@@ -159,4 +160,11 @@
     Type: Type,
     mappings: mappings
   };
+  function compose$(fs){
+    return function(){
+      var i, args = arguments;
+      for (i = fs.length; i > 0; --i) { args = [fs[i-1].apply(this, args)]; }
+      return args[0];
+    };
+  }
 }).call(this);
