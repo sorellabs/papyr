@@ -16,19 +16,31 @@ Getting your API documentation in 5 easy steps:
 $ npm install -g papyr
 ```
 
-2) Run the quick-start task and answer the questions it asks you:
+2) Create a JSON file describing your documentation:
 
 ```bash
-$ papyr quick-start
+$ cat > doc.json
+{ "project": "Test"
+, "version": "1.0.0-snapshot"
+, "template": "default.jade"
+, "output": "docs/build"
+, "apis": [{ "licence": "MIT"
+           , "repository": "http://github.com/you/test"
+           , "examples": "examples/"
+           , "entities": [ "test.json" ] }]}
 ```
 
-3) Put your JSON files in the source fouder you specified in the
+3) Put your API JSON files in the source folder you specified in the
 previous step.
 
-4) Run the build step:
+```bash
+$ cp ~/path/to/test.json test.json
+```
+
+4) Run the build step specifying the documentation JSON.
 
 ```bash
-$ papyr build
+$ papyr build doc.json
 ```
 
 5) Open the `index.html` file in your browser.
