@@ -50,7 +50,7 @@ global <<< require 'prelude-ls'
 # Writes contents to a path
 # write :: String -> String -> IO ()
 write = (pathname, contents) -->
-  fs.write-file-sync pathname, content, 'utf-8'
+  fs.write-file-sync pathname, contents, 'utf-8'
 
 
 # Reads contents from a path.
