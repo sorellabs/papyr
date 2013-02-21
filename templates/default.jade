@@ -2,14 +2,14 @@
 html
   head
     meta(charset="utf-8")
-    title #{project} — Papyr°
+    title #{self.project} — Papyr°
     link(rel="stylesheet", href="media/css/screen.css")
     link(rel="stylesheet", href="vendor/google-code-prettify/styles/sunburst.css")
   body
     #header
       .constrained
-        h1#logo= project
-          em.version= version
+        h1#logo= self.project
+          em.version= self.version
         #search-panel
           .field.search-field
             input#search-query(type="text",
@@ -26,7 +26,7 @@ html
         #papyr-info
           h4.application Papyr°
             em powered
-          .small.copy-info= copyright
+          .small.copy-info= self.copyright
 
     script(src="vendor/google-code-prettify/prettify.js")
     script(src="media/lib/papyr.js")
