@@ -126,8 +126,9 @@ inherit = (entity, api-map, api, property) -->
 # Loads Markdown literate examples from a folder
 # load-examples :: String -> Entity -> IO [String]
 load-examples = (pathname, entity) -->
-  files = glob.sync '*.md', root: (path.resolve pathname, entity.id)
-  map (marked . read), files  
+  base = path.resolve pathname, entity.id
+  files = glob.sync '*.md', cwd: base
+  map (marked . read . (-> path.resolve base, it)), files  
 
 
 # Process an API to load examples and what not
