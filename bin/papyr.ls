@@ -73,7 +73,7 @@ read-template = (pathname) ->
 
 # Copies a tree recursively
 # copy-tree :: String -> String -> IO ()
-copy-tree = (out, from) -->
+copy-tree = (from, out) -->
   wrench.copy-dir-sync-recursive from, out
 
 
@@ -131,7 +131,7 @@ load-examples = (pathname, entity) -->
 
 
 # Process an API to load examples and what not
-# process-api :: API -> IO API
+# process-api :: { String -> Entity } -> API -> IO API
 process-api = (api-map, api) --> api.entities |> each (x) ->
   if api.prefix => x.id = api.prefix + x.id
 
@@ -149,7 +149,8 @@ process-api = (api-map, api) --> api.entities |> each (x) ->
 # Load API entities
 # load-api-entities :: API -> IO API
 load-api-entities = (api) ->
-  api.entities = fold (<<<), (map read-as-json, api.entities)
+  api.entities = concat-map read-as-json, api.entities
+  api
 
     
 # Builds the documentation from a JSON configuration
@@ -158,13 +159,15 @@ build-documentation = (config) ->
   data      = read-as-json config
   data.apis = map load-api-entities, data.apis
   template  = jade.compile (read-template (data.template or 'default.jade'))
-  entities  = concat-map (process-api (api-map data.apis)), data.apis
+  entities  = data.apis |> concat-map (api) ->
+                             process-api (api-map api), api
+                             return api.entities
 
   # Initialise the output directory
   out = data.output or 'build-docs'
   make-tree out
-  copy-tree 'www/media', "#{out}/media"
-  copy-tree 'www/vendor', "#{out}/vendor"
+  copy-tree (path.resolve __dirname, '../www/media'), "#{out}/media"
+  copy-tree (path.resolve __dirname, '../www/vendor'), "#{out}/vendor"
   write "#{out}/index.html" (template data)
   write "#{out}/api.jsonp" (jsonp (to-json entities))
   console.log "Documentation successfully generated at #{out}."
