@@ -1,9 +1,10 @@
 {
   "name": "papyr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A single-page web app for visualising API references.",
   "main": "index.js",
   "scripts": {
+    "prepublish": "make all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": "./bin/papyr",
